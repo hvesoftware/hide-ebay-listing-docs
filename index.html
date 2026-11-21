@@ -7,31 +7,301 @@
     <style>
       :root {
         color-scheme: light dark;
+        --border: #3a3a3a;
+        --muted: #9a9a9a;
+        --accent: #5b9bd5;
+        --bg: #121212;
+        --panel-bg: #1a1a1a;
       }
+
+      * {
+        box-sizing: border-box;
+      }
+
       body {
-        max-width: 760px;
-        margin: 0 auto;
-        padding: 24px 20px 64px;
+        margin: 0;
+        min-height: 100vh;
+        background: var(--bg);
+        color: #eee;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial,
           sans-serif;
         line-height: 1.5;
       }
-      img {
+
+      header {
+        padding: 20px 24px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      header h1 {
+        margin: 0;
+        font-size: 20px;
+      }
+
+      .layout {
+        display: flex;
+        align-items: flex-start;
+        max-width: 960px;
+        margin: 0 auto;
+      }
+
+      /* Left side menu */
+      nav.sidebar {
+        flex: none;
+        width: 180px;
+        padding: 24px 12px;
+        position: sticky;
+        top: 0;
+      }
+
+      nav.sidebar ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      nav.sidebar button {
+        display: block;
+        width: 100%;
+        text-align: left;
+        appearance: none;
+        background: transparent;
+        border: none;
+        border-left: 3px solid transparent;
+        color: var(--muted);
+        font: inherit;
+        font-size: 15px;
+        padding: 10px 14px;
+        margin-bottom: 4px;
+        border-radius: 0 6px 6px 0;
+        cursor: pointer;
+      }
+
+      nav.sidebar button:hover {
+        color: #eee;
+        background: #ffffff0d;
+      }
+
+      nav.sidebar button.active {
+        color: #fff;
+        font-weight: 600;
+        border-left-color: var(--accent);
+        background: #ffffff14;
+      }
+
+      /* Right content panel */
+      main.content {
+        flex: 1;
+        min-width: 0;
+        padding: 24px 24px 64px;
+        border-left: 1px solid var(--border);
+      }
+
+      .panel {
+        display: none;
+      }
+
+      .panel.active {
+        display: block;
+      }
+
+      .panel h2 {
+        margin-top: 0;
+      }
+
+      .panel h2:not(:first-child) {
+        margin-top: 32px;
+      }
+
+      .step {
+        margin: 28px 0;
+      }
+
+      .step img {
         max-width: 100%;
-        border: 1px solid #8884;
+        border: 1px solid var(--border);
         border-radius: 6px;
         display: block;
-        margin: 12px 0;
+        margin-top: 10px;
+      }
+
+      dl.changelog dt {
+        font-weight: 600;
+        font-size: 16px;
+        margin-top: 24px;
+      }
+
+      dl.changelog dt:first-child {
+        margin-top: 0;
+      }
+
+      dl.changelog dt .status {
+        font-weight: 400;
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      dl.changelog dd {
+        margin: 6px 0 0;
+      }
+
+      dl.changelog ul {
+        margin: 6px 0 0;
+        padding-left: 20px;
+      }
+
+      /* Narrow screens: sidebar on top instead of the left column */
+      @media (max-width: 640px) {
+        .layout {
+          flex-direction: column;
+        }
+
+        nav.sidebar {
+          position: static;
+          width: 100%;
+          padding: 12px 16px 0;
+        }
+
+        nav.sidebar ul {
+          display: flex;
+          gap: 8px;
+        }
+
+        nav.sidebar button {
+          border-left: none;
+          border-bottom: 3px solid transparent;
+          border-radius: 6px 6px 0 0;
+        }
+
+        nav.sidebar button.active {
+          border-bottom-color: var(--accent);
+        }
+
+        main.content {
+          border-left: none;
+          border-top: 1px solid var(--border);
+        }
       }
     </style>
   </head>
   <body>
-    <h1>Hide eBay Listing — User Guide</h1>
-    <p>
-      <em
-        >Placeholder page — replace this content with the real walkthrough and
-        screenshots.</em
-      >
-    </p>
+    <header>
+      <h1>Hide eBay Listing — User Guide</h1>
+    </header>
+
+    <div class="layout">
+      <nav class="sidebar">
+        <ul>
+          <li><button type="button" class="nav-link active" data-panel="how-to-use">How to use</button></li>
+          <li><button type="button" class="nav-link" data-panel="changelog">Changelog</button></li>
+        </ul>
+      </nav>
+
+      <main class="content">
+        <section id="how-to-use" class="panel active">
+          <h2>How to use</h2>
+
+          <div class="step">
+            <h3>1. Hide a listing</h3>
+            <p>
+              On any eBay search or category page, hover over a listing's photo
+              and click the red ✕ that appears in the bottom-right corner. The
+              listing disappears immediately and stays hidden on every future
+              visit.
+            </p>
+            <img src="images/hide-a-listing.jpg" alt="Hovering a listing's photo shows a red ✕ button labeled 'Hide this listing' in the bottom-right corner." />
+          </div>
+
+          <div class="step">
+            <h3>2. Open Settings</h3>
+            <p>
+              Click the puzzle-piece extensions icon in your browser's
+              toolbar, find <strong>Hide eBay Listing</strong>, and choose
+              <strong>Manage Extension</strong>, then <strong>Options</strong>
+              (labeled <strong>Preferences</strong> in some browsers).
+            </p>
+            <img src="images/open-settings.jpg" alt="Browser extensions menu showing Hide eBay Listing's Manage Extension and Options menu items." />
+          </div>
+
+          <div class="step">
+            <h3>3. Review or unhide listings</h3>
+            <p>
+              Settings lists every listing you've hidden, with its title and
+              the date you hid it. Click <strong>Unhide</strong> to bring one
+              back, or use <strong>Export</strong> / <strong>Import</strong>
+              to back up or restore your hidden list, and <strong>Clear
+              all</strong> to start over.
+            </p>
+            <img src="images/hidden-listings.jpg" alt="Settings page Hidden listings section showing one hidden listing with Export, Import, Clear all, and an Unhide button." />
+          </div>
+
+          <div class="step">
+            <h3>4. Manage eBay domains</h3>
+            <p>
+              All major eBay sites (ebay.com, ebay.co.uk, ebay.de, and 16
+              others) are enabled automatically — there's nothing to set up.
+              If you don't shop on a particular eBay site, click
+              <strong>Remove</strong> next to it; you can always add it back
+              later from the same screen.
+            </p>
+            <img src="images/ebay-domains.jpg" alt="Settings page eBay domains section listing several enabled eBay domains, each with a Remove button." />
+          </div>
+        </section>
+
+        <section id="changelog" class="panel">
+          <h2>Changelog</h2>
+
+          <dl class="changelog">
+            <dt>0.3.0 <span class="status">— in development</span></dt>
+            <dd>
+              All 19 supported eBay domains are now enabled automatically the
+              moment the extension installs — no more adding regional eBay
+              sites one at a time from Settings.
+            </dd>
+
+            <dt>0.2.1</dt>
+            <dd>Updated to handle eBay's redesigned search-results pages.</dd>
+
+            <dt>0.2.0</dt>
+            <dd>
+              <ul>
+                <li>Added support for Chrome, alongside Firefox.</li>
+                <li>
+                  Added the eBay domains section in Settings, so you can enable
+                  additional regional eBay sites.
+                </li>
+                <li>New extension icons.</li>
+              </ul>
+            </dd>
+
+            <dt>0.1.0</dt>
+            <dd>Initial release: hide individual eBay listings, with hidden listings staying hidden across future visits.</dd>
+          </dl>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      (function () {
+        "use strict";
+
+        var navLinks = document.querySelectorAll(".nav-link");
+        var panels = document.querySelectorAll(".panel");
+
+        navLinks.forEach(function (link) {
+          link.addEventListener("click", function () {
+            navLinks.forEach(function (l) {
+              l.classList.remove("active");
+            });
+            panels.forEach(function (p) {
+              p.classList.remove("active");
+            });
+
+            link.classList.add("active");
+            document.getElementById(link.dataset.panel).classList.add("active");
+          });
+        });
+      })();
+    </script>
   </body>
 </html>
